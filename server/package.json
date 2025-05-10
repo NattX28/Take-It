@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "module": "index.ts",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_ENV=development bun --watch src/index.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=production node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.1",
+    "prisma": "^6.7.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}

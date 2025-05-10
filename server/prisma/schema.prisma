@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement()) @map("user_id")
+  username       String   @unique @db.VarChar(50)
+  email          String   @unique @db.VarChar(100)
+  hashPassword   String   @map("hash_password") @db.VarChar(255)
+  profilePicture String?  @default("default.jpg") @map("profile_picture") @db.VarChar(255)
+  createdAt      DateTime @default(now()) @map("created_at")
+  lastActive     DateTime @default(now()) @map("last_active")
+
+  // Relations
+  galleries     Gallery[]
+  messages      Message[]
+  participantIn ChatRoomParticipant[]
+
+  // Friend relations - user as requester
+  sentFrendships      Friendship[] @relation("UserOneSide")
+  // Friend relations - user as reciever
+  recievedFriendships Friendship[] @relation("UserTwoSide")
+
+  // Notifications relation
+  notifications     Notification[] @relation("NotificationReceiver")
+  sendNotifications Notification[] @relation("NotificationSender")
+
+  // Gallery Sharing relations
+  shareWith        GalleryShare[] @relation("SharedWithUser")
+  galleries_shared GalleryShare[] @relation("GalleryOwner")
+}
+
+model Gallery {
+  id        Int      @id @default(autoincrement()) @map("gallery_id")
+  userId    Int      @map("user_id")
+  imageUrl  String   @map("image_url") @db.VarChar(255)
+  caption   String?  @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  isPublic  Boolean  @default(true) @map("is_public")
+
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sharedWith GalleryShare[]
+
+  @@map("Gallery")
+}
+
+model GalleryShare {
+  id           Int      @id @default(autoincrement()) @map("gallery_share_id")
+  galleryId    Int      @map("gallery_id")
+  ownerId      Int      @map("owner_id")
+  sharedWithId Int      @map("shared_with_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relations
+  gallery    Gallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  owner      User    @relation("GalleryOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  sharedWith User    @relation("SharedWithUser", fields: [sharedWithId], references: [id], onDelete: Cascade)
+
+  @@unique([galleryId, sharedWithId], name: "unique_gallery_share")
+  @@map("GalleryShare")
+}
+
+model Friendship {
+  id        Int      @id @default(autoincrement()) @map("friendship_id")
+  userId1   Int      @map("user_id_1")
+  userId2   Int      @map("user_id_2")
+  status    String   @default("pending") @db.VarChar(10)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  userOne User @relation("UserOneSide", fields: [userId1], references: [id], onDelete: Cascade)
+  userTwo User @relation("UserTwoSide", fields: [userId2], references: [id], onDelete: Cascade)
+
+  @@unique([userId1, userId2], name: "unique_friendship")
+  @@map("Friendship")
+}
+
+model ChatRoom {
+  id        Int      @id @default(autoincrement()) @map("chat_room_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  participants ChatRoomParticipant[]
+  messages     Message[]
+
+  @@map("ChatRoom")
+}
+
+model ChatRoomParticipant {
+  chatRoomId Int      @map("chat_room_id")
+  userId     Int      @map("user_id")
+  joinedAt   DateTime @default(now()) @map("joined_at")
+
+  // Relations
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([chatRoomId, userId])
+  @@map("ChatRoomParticipant")
+}
+
+model Message {
+  id         Int      @id @default(autoincrement()) @map("message_id")
+  chatRoomId Int      @map("chat_room_id")
+  userId     Int      @map("user_id")
+  content    String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  isRead     Boolean  @default(false) @map("is_read")
+
+  //Relations
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("Message")
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement()) @map("notification_id")
+  userId      Int      @map("user_id")
+  senderId    Int      @map("sender_id")
+  type        String   @db.VarChar(20)
+  referenceId Int?     @map("reference_id")
+  isRead      Boolean  @default(false) @map("is_read")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user   User @relation("NotificationReceiver", fields: [userId], references: [id], onDelete: Cascade)
+  sender User @relation("NotificationSender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@map("Notification")
+}
