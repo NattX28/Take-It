@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import { readdirSync } from "fs"
 import path from "path"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 const isProd = process.env.NODE_ENV === "production"
@@ -16,6 +17,7 @@ if (isProd) {
 }
 
 const app = express()
+app.use(cookieParser())
 app.use(express.json())
 
 const routesPath = path.join(__dirname, "routes")

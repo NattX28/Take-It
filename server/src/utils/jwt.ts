@@ -12,5 +12,9 @@ export const createToken = (user: { id: number; username: string }) => {
 }
 
 export const verifyToken = (token: string) => {
-  return jwt.verify(token, process.env.JWT_SECRET as string)
+  return jwt.verify(token, process.env.JWT_SECRET as string) as {
+    id: number
+    username: string
+    exp: number
+  }
 }

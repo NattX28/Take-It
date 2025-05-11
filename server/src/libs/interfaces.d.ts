@@ -32,3 +32,20 @@ export interface AuthUser {
   email: string
   token: string
 }
+
+// friendship interface
+// Friendship related interfaces
+export interface NewFriendship {
+  userId2: number
+}
+
+export interface Friendship {
+  id: number
+  userId1: number
+  userId2: number
+  status: "pending" | "accepted" | "rejected"
+  createdAt: Date
+  updatedAt: Date
+  userOne?: User
+  userTwo?: User
+}
