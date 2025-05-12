@@ -1,26 +1,156 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  /* Background */
+  .bg-dark-base {
+    background-color: #0b0b0b;
   }
-}
+  .bg-dark-mid {
+    background-color: #121212;
+  }
+  .bg-dark-soft {
+    background-color: #1a1a1a;
+  }
+  .bg-campfire-orange {
+    background-color: #ff6d3a;
+  }
+  .bg-campfire-soft {
+    background-color: rgba(255, 109, 58, 0.15);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Text */
+  .text-main-base {
+    color: #ffffff;
+  }
+  .text-main-mid {
+    color: #cfcfcf;
+  }
+  .text-dark-base {
+    color: #0b0b0b;
+  }
+  .text-dark-mid {
+    color: #121212;
+  }
+  .text-dark-soft {
+    color: #1a1a1a;
+  }
+  .text-campfire-orange {
+    color: #ff6d3a;
+  }
+  .text-campfire-soft {
+    color: rgba(255, 109, 58, 0.15);
+  }
+
+  /* Border */
+  .border-dark-base {
+    border-color: #0b0b0b;
+  }
+  .border-dark-mid {
+    border-color: #121212;
+  }
+  .border-dark-soft {
+    border-color: #1a1a1a;
+  }
+  .border-campfire-orange {
+    border-color: #ff6d3a;
+  }
+  .border-campfire-soft {
+    border-color: rgba(255, 109, 58, 0.15);
+  }
+
+  /* Hover Backgrounds */
+  .hover\:bg-dark-base\:hover {
+    background-color: #121212;
+  }
+  .hover\:bg-dark-mid\:hover {
+    background-color: #1a1a1a;
+  }
+  .hover\:bg-dark-soft\:hover {
+    background-color: #222222;
+  }
+  .hover\:bg-campfire-orange\:hover {
+    background-color: #ff8a5f;
+  }
+  .hover\:bg-campfire-soft\:hover {
+    background-color: rgba(255, 109, 58, 0.25);
+  }
+
+  /* Hover Text */
+  .hover\:text-dark-base\:hover {
+    color: #1a1a1a;
+  }
+  .hover\:text-dark-mid\:hover {
+    color: #222222;
+  }
+  .hover\:text-dark-soft\:hover {
+    color: #2d2d2d;
+  }
+  .hover\:text-campfire-orange\:hover {
+    color: #ff8a5f;
+  }
+  .hover\:text-campfire-soft\:hover {
+    color: rgba(255, 109, 58, 0.25);
+  }
+
+  /* Hover Borders */
+  .hover\:border-dark-base\:hover {
+    border-color: #121212;
+  }
+  .hover\:border-dark-mid\:hover {
+    border-color: #1a1a1a;
+  }
+  .hover\:border-dark-soft\:hover {
+    border-color: #222222;
+  }
+  .hover\:border-campfire-orange\:hover {
+    border-color: #ff8a5f;
+  }
+  .hover\:border-campfire-soft\:hover {
+    border-color: rgba(255, 109, 58, 0.25);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(11, 11, 11, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-campfire {
+    background: rgba(255, 109, 58, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 109, 58, 0.2);
+  }
+
+  /* Hover Glassmorphism */
+  .hover\:glass:hover {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .hover\:glass-dark:hover {
+    background: rgba(11, 11, 11, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hover\:glass-campfire:hover {
+    background: rgba(255, 109, 58, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 109, 58, 0.3);
+  }
 }
