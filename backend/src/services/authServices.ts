@@ -56,6 +56,9 @@ export const login = async (
     id: user.id,
     username: user.username,
     email: user.email,
+    profilePicture: user.profilePicture,
+    createdAt: user.createdAt,
+    lastActive: user.lastActive,
     token,
-  }
+  } as AuthUser
 }

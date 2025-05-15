@@ -1,5 +1,5 @@
 const UserLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  return <div className="">{children}</div>
+  return <main className="flex flex-col items-center">{children}</main>
 }
 
 export default UserLayout

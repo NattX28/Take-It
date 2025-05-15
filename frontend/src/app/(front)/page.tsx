@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Metadata } from "next"
 
 import { Icon } from "@iconify/react"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Take It",
@@ -25,15 +26,21 @@ const Home = () => {
             </p>
           </div>
           <div className="mt-12">
-            <Button
-              variant={`outline`}
-              size={`lg`}
-              className="group cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out hover:glass">
-              Let's Take It!
-              <span className="group-hover:animate-wiggle">
-                <Icon icon="mynaui:arrow-right-solid" width="24" height="24" />
-              </span>
-            </Button>
+            <Link href="/login">
+              <Button
+                variant={`outline`}
+                size={`lg`}
+                className="group cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out hover:glass">
+                Let's Take It!
+                <span className="animate-wiggle group-hover:animate-wiggle">
+                  <Icon
+                    icon="mynaui:arrow-right-solid"
+                    width="24"
+                    height="24"
+                  />
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

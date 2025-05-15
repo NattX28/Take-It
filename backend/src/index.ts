@@ -3,10 +3,13 @@ import dotenv from "dotenv"
 import { readdirSync } from "fs"
 import path from "path"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 dotenv.config()
 const isProd = process.env.NODE_ENV === "production"
 const PORT = process.env.PORT || 5000
+
+const app = express()
 
 if (isProd) {
   console.log("Running in production mode")
@@ -14,9 +17,14 @@ if (isProd) {
 } else {
   console.log("Running in development mode")
   // e.g. enable CORS for localhost, use morgan for logging, etc.
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  )
 }
 
-const app = express()
 app.use(cookieParser())
 app.use(express.json())
 
