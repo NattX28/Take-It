@@ -51,10 +51,21 @@ export interface CameraConsoleProps {
   isCaptureMode: boolean
   hasMultipleCameras: boolean
   isCameraOn: boolean
+  isUploading?: boolean
   onTakePhoto: () => void
   onCancle: () => void
   onUpload: () => void
   onToggleCaption: () => void
   onSwitchCamera: () => void
   onStartCamera: () => void
+}
+
+// gallery (images)
+export interface Gallery {
+  id: number
+  userId: number
+  imageUrl: string
+  caption: string | null
+  createdAt: Date
+  isPublic: boolean
 }

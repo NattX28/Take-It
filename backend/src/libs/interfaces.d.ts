@@ -46,3 +46,13 @@ export interface Friendship {
   userOne?: User
   userTwo?: User
 }
+
+// gallery (images)
+export interface Gallery {
+  id: number
+  userId: number
+  imageUrl: string
+  caption: string | null
+  createdAt: Date
+  isPublic: boolean
+}

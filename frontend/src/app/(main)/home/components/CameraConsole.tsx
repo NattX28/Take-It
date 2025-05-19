@@ -8,6 +8,7 @@ const CameraConsole = ({
   isCaptureMode,
   hasMultipleCameras,
   isCameraOn,
+  isUploading = false,
   onTakePhoto,
   onCancle,
   onUpload,
@@ -22,32 +23,46 @@ const CameraConsole = ({
         <>
           <button
             onClick={onCancle}
+            disabled={isUploading}
             className="flex flex-col items-center transition-transform duration-200 hover:scale-110">
             <Icon
               icon="material-symbols:cancel-outline-rounded"
               width="48"
               height="48"
+              className={isUploading ? "text-gray-400" : ""}
             />
           </button>
 
           <button
             onClick={onUpload}
+            disabled={isUploading}
             className="flex flex-col items-center transition-transform duration-200 hover:scale-110">
-            <Icon
-              icon="mingcute:send-fill"
-              width="64"
-              height="64"
-              style={{ color: "#ff6d3a" }}
-            />
+            {isUploading ? (
+              <Icon
+                icon="eos-icons:loading"
+                width="64"
+                height="64"
+                className="animate-spin"
+              />
+            ) : (
+              <Icon
+                icon="mingcute:send-fill"
+                width="64"
+                height="64"
+                style={{ color: "#ff6d3a" }}
+              />
+            )}
           </button>
 
           <button
             onClick={onToggleCaption}
+            disabled={isUploading}
             className="flex flex-col items-center transition-transform duration-200 hover:scale-110">
             <Icon
               icon="solar:text-circle-bold-duotone"
               width="48"
               height="48"
+              className={isUploading ? "text-gray-400" : ""}
             />
           </button>
         </>

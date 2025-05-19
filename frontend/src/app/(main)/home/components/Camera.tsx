@@ -1,7 +1,7 @@
 "use client"
 import { useRef, useState, useEffect } from "react"
-import { Icon } from "@iconify/react"
 import CameraConsole from "./CameraConsole"
+import { uploadPhoto } from "@/services/photo"
 
 const Camera = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -13,6 +13,7 @@ const Camera = () => {
   const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null)
   const [caption, setCaption] = useState<string>("")
   const [isAddingCaption, setIsAddingCaption] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
 
   // Check if the device has multiple cameras
   const checkForMultipleCameras = async () => {
@@ -129,17 +130,57 @@ const Camera = () => {
     startCamera()
   }
 
-  const handleUpload = () => {
-    // Implement the upload logic here
+  const base64ToBlob = (base64: string): File => {
+    // split the base64 string to get data after "base64"
+    const base64Data = base64.split(",")[1]
+    // covert base64 to binary
+    const byteCharacters = atob(base64Data)
+    const byteArrays = []
 
-    console.log("Uploading photo with caption:", caption)
-    alert("Photo uploaded successfully!")
+    for (let i = 0; i < byteCharacters.length; i += 512) {
+      const slice = byteCharacters.slice(i, i + 512)
+      const byteNumbers = new Array(slice.length)
 
-    // Reset the state after upload
-    setCapturedPhoto(null)
-    setCaption("")
-    setIsAddingCaption(false)
-    startCamera()
+      for (let j = 0; j < slice.length; j++) {
+        byteNumbers[j] = slice.charCodeAt(j)
+      }
+
+      const byteArray = new Uint8Array(byteNumbers)
+      byteArrays.push(byteArray)
+    }
+
+    const blob = new Blob(byteArrays, { type: "image/jpeg" })
+    return new File([blob], "photo.jpg", { type: "image/jpeg" })
+  }
+
+  const handleUpload = async () => {
+    if (!capturedPhoto) return
+
+    try {
+      setIsUploading(true)
+      // convert the base64 photo to a Blob/File
+      const photoFile = base64ToBlob(capturedPhoto)
+
+      // upload the photo
+      const response = await uploadPhoto(photoFile, caption || undefined)
+
+      console.log("Photo uploaded successfully:", response)
+
+      // Show success message
+      alert("Photo uploaded successfully!")
+
+      // Reset the state after upload
+      setCapturedPhoto(null)
+      setCaption("")
+      setIsAddingCaption(false)
+      startCamera()
+    } catch (error) {
+      const err = error as Error
+      console.error("Error uploading photo:", err)
+      alert("Failed to upload photo. Please try again.")
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   const toggleCaptionInput = () => {
@@ -205,6 +246,7 @@ const Camera = () => {
         onToggleCaption={toggleCaptionInput}
         onSwitchCamera={switchCamera}
         onStartCamera={startCamera}
+        isUploading={isUploading}
       />
     </div>
   )
