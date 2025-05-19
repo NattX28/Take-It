@@ -46,3 +46,15 @@ export interface Friendship {
   userOne?: User
   userTwo?: User
 }
+
+export interface CameraConsoleProps {
+  isCaptureMode: boolean
+  hasMultipleCameras: boolean
+  isCameraOn: boolean
+  onTakePhoto: () => void
+  onCancle: () => void
+  onUpload: () => void
+  onToggleCaption: () => void
+  onSwitchCamera: () => void
+  onStartCamera: () => void
+}

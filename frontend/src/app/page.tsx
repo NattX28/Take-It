@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "take photo and share with friends",
 }
 
-const Home = () => {
+const LandingPage = () => {
   return (
     <>
       <main className="flex justify-center items-center min-h-screen">
@@ -47,4 +47,4 @@ const Home = () => {
     </>
   )
 }
-export default Home
+export default LandingPage

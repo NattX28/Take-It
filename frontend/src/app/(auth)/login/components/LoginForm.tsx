@@ -40,7 +40,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 sm:space-y-2 lg:space-y-4">
+        className="flex flex-col justify-center items-center sm:w-full xl:w-1/2 gap-2 sm:gap-4 lg:gap-6">
         {/* username */}
         <FormField
           control={form.control}
@@ -76,7 +76,7 @@ const LoginForm = () => {
         <Button
           variant={"secondary"}
           size={"lg"}
-          className="glass w-1/2 hover:cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out hover:glass"
+          className="glass mt-8 md:mt-6 lg:mt-4 xl:mt-2 w-1/2 hover:cursor-pointer hover:scale-105 transition-all duration-200 ease-in-out hover:glass"
           type="submit">
           Login
         </Button>

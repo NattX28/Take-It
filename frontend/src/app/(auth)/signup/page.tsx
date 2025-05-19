@@ -1,7 +1,7 @@
 import Link from "next/link"
 import SignupForm from "./components/SignupForm"
 
-const SingupPage = () => {
+const SignupPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full gap-8">
       <h1 className="text-4xl font-bold">Sign Up</h1>
@@ -17,4 +17,4 @@ const SingupPage = () => {
     </div>
   )
 }
-export default SingupPage
+export default SignupPage
