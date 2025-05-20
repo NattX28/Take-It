@@ -69,3 +69,11 @@ export interface Gallery {
   createdAt: Date
   isPublic: boolean
 }
+
+// Chat
+export interface ChatItemProps {
+  name: string
+  lastMessage: string
+  unread: boolean
+  time: string
+}

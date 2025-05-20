@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-campfire-night">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-campfire-night bg-5x animate-campfire-float min-h-screen text-main-base w-full`}>
         {children}
