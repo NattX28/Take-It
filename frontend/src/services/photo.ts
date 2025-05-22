@@ -27,3 +27,20 @@ export const uploadPhoto = async (
     throw error
   }
 }
+
+// get photos in gallery with infinit scroll
+export const getPhotosInGallery = async (
+  id: number,
+  page: number = 1,
+  limit: number = 20
+): Promise<ApiResponse<Gallery[]>> => {
+  try {
+    const response = await api.get(
+      `${BASE_URL_GALLERY}/${id}?page=${page}&limit=${limit}`
+    )
+    return response.data
+  } catch (error) {
+    console.error("Get photos in gallery error:", error)
+    throw error
+  }
+}

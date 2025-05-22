@@ -11,5 +11,11 @@ router.post(
   requiredAuthMiddleware,
   galleryController.uploadPhoto
 )
+// get photos in gallery with infinit scroll
+router.get(
+  "/gallery/:id",
+  requiredAuthMiddleware,
+  galleryController.getPhotosGallery
+)
 
 export default router

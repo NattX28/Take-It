@@ -65,9 +65,10 @@ export interface Gallery {
   id: number
   userId: number
   imageUrl: string
-  caption: string | null
+  caption?: string | null
   createdAt: Date
   isPublic: boolean
+  user?: User
 }
 
 // Chat
