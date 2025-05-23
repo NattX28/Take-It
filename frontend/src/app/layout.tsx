@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-campfire-night">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-campfire-night bg-5x animate-campfire-float min-h-screen text-main-base w-full`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-campfire-night bg-5x animate-campfire-float min-h-screen text-main-base w-full scrollbar-hide`}>
         {children}
       </body>
     </html>

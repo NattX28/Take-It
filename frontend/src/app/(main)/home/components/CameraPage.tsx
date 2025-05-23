@@ -4,7 +4,7 @@ import Camera from "./Camera"
 
 const CameraPage = () => {
   return (
-    <div>
+    <div className="flex-1 h-full">
       <Camera />
     </div>
   )

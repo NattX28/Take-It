@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+/* Hide scrollbar on all scrollable containers */
+html,
+body,
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
 @layer components {
   /* Background */
   .bg-dark-base {

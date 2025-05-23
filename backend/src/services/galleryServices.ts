@@ -12,11 +12,13 @@ export const createGallery = async (
   // upload to cloudinary first
   const cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
     folder: "take-it-gallery",
+    resource_type: "image",
     transformation: [
       {
         width: 1080,
         height: 1080,
         crop: "limit",
+        quality: "auto:good",
       },
     ],
   })

@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from "react"
 import CameraConsole from "./CameraConsole"
 import { uploadPhoto } from "@/services/photo"
+import SwipePersuade from "./SwipePersuade"
 
 const Camera = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -197,57 +198,66 @@ const Camera = () => {
   }, [])
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      {error && <div className="text-red-500">{error}</div>}
+    <div className="h-full flex flex-col justify-center items-center px-2 gap-12 sm:gap-20 md:gap-24 lg:gap-28 xl:gap-32">
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+      <div className="relative w-full flex flex-col items-center">
+        <div className="w-full max-w-md aspect-square relative rounded-4xl overflow-hidden shadow-lg">
+          {capturedPhoto ? (
+            <img
+              src={capturedPhoto}
+              alt="Captured photo"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )}
+        </div>
 
-      <div className="w-full aspect-square relative rounded-4xl overflow-hidden">
-        {capturedPhoto ? (
-          <img
-            src={capturedPhoto}
-            alt="Captured photo"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        {/* canvas for taking photo (hidden) */}
+        <canvas ref={canvasRef} className="hidden" />
+
+        {/* Caption input if adding caption */}
+        {capturedPhoto && isAddingCaption && (
+          <div className="w-full max-w-md mt-4">
+            <input
+              type="text"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              placeholder="Tell something"
+              className="w-full p-3 border rounded-lg"
+              autoFocus
+            />
+          </div>
         )}
-      </div>
 
-      {/* canvas for taking photo (hidden) */}
-      <canvas ref={canvasRef} className="hidden" />
-
-      {/* Caption input if adding caption */}
-      {capturedPhoto && isAddingCaption && (
-        <div className="w-full p-2">
-          <input
-            type="text"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            placeholder="Tell something"
-            className="w-full p-2 border-rounded-lg"
-            autoFocus
+        {/* Camera Console */}
+        <div className="mt-6 w-full max-w-md">
+          <CameraConsole
+            isCaptureMode={!!capturedPhoto}
+            hasMultipleCameras={hasMultipleCameras}
+            isCameraOn={isCameraOn}
+            onTakePhoto={takePhoto}
+            onCancle={handleCancel}
+            onUpload={handleUpload}
+            onToggleCaption={toggleCaptionInput}
+            onSwitchCamera={switchCamera}
+            onStartCamera={startCamera}
+            isUploading={isUploading}
           />
         </div>
+      </div>
+      {/* SwipePersuade - แสดงเฉพาะเมื่อไม่ได้ถ่ายรูป */}
+      {!capturedPhoto && (
+        <div>
+          <SwipePersuade />
+        </div>
       )}
-
-      {/* Camera Console */}
-      <CameraConsole
-        isCaptureMode={!!capturedPhoto}
-        hasMultipleCameras={hasMultipleCameras}
-        isCameraOn={isCameraOn}
-        onTakePhoto={takePhoto}
-        onCancle={handleCancel}
-        onUpload={handleUpload}
-        onToggleCaption={toggleCaptionInput}
-        onSwitchCamera={switchCamera}
-        onStartCamera={startCamera}
-        isUploading={isUploading}
-      />
     </div>
   )
 }
