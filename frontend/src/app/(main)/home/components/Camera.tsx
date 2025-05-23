@@ -76,7 +76,7 @@ const Camera = () => {
       }
     } catch (error) {
       const err = error as Error
-      setError("Failed to access camera" + err.message)
+      setError("Failed to access camera " + err.message)
       console.error("Error accessing camera:", err)
     }
   }
@@ -199,9 +199,11 @@ const Camera = () => {
 
   return (
     <div className="h-full flex flex-col justify-center items-center px-2 gap-12 sm:gap-20 md:gap-24 lg:gap-28 xl:gap-32">
-      {error && <div className="text-red-500 mb-4">{error}</div>}
       <div className="relative w-full flex flex-col items-center">
         <div className="w-full max-w-md aspect-square relative rounded-4xl overflow-hidden shadow-lg">
+          {error && (
+            <div className="text-center text-red-500 mb-8">{error}</div>
+          )}
           {capturedPhoto ? (
             <img
               src={capturedPhoto}

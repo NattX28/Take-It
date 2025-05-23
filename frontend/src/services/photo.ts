@@ -44,3 +44,17 @@ export const getPhotosInGallery = async (
     throw error
   }
 }
+
+export const getFeedPhotos = async (
+  page: number = 1,
+  limit: number = 10
+): Promise<ApiResponse<Gallery[]>> => {
+  try {
+    const response = await api.get(`feed?page=${page}&limit=${limit}`)
+
+    return response.data
+  } catch (error) {
+    console.error("Get feed photos error:", error)
+    throw error
+  }
+}
