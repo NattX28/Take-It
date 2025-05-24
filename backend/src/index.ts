@@ -4,12 +4,14 @@ import { readdirSync } from "fs"
 import path from "path"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import morgan from "morgan"
 
 dotenv.config()
 const isProd = process.env.NODE_ENV === "production"
 const PORT = process.env.PORT || 5000
 
 const app = express()
+app.use(morgan("tiny"))
 
 if (isProd) {
   console.log("Running in production mode")

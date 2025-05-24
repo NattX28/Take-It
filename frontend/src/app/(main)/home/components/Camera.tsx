@@ -54,6 +54,7 @@ const Camera = () => {
   // Start the camera
   const startCamera = async () => {
     try {
+      setError(null)
       if (videoRef.current && videoRef.current.srcObject) {
         // stop camera if already started
         stopCamera()
@@ -77,6 +78,7 @@ const Camera = () => {
     } catch (error) {
       const err = error as Error
       setError("Failed to access camera " + err.message)
+      setIsCameraOn(false) // Make sure camera state is false on error
       console.error("Error accessing camera:", err)
     }
   }
@@ -121,6 +123,14 @@ const Camera = () => {
 
       // stop camera after taking the photo
       stopCamera()
+    }
+  }
+
+  const toggleCamera = () => {
+    if (isCameraOn) {
+      stopCamera()
+    } else {
+      startCamera()
     }
   }
 
@@ -190,7 +200,6 @@ const Camera = () => {
 
   useEffect(() => {
     startCamera()
-
     // cleanup function to stop the camera when the component unmounts
     return () => {
       stopCamera()
@@ -249,7 +258,7 @@ const Camera = () => {
             onUpload={handleUpload}
             onToggleCaption={toggleCaptionInput}
             onSwitchCamera={switchCamera}
-            onStartCamera={startCamera}
+            onToggleCamera={toggleCamera}
             isUploading={isUploading}
           />
         </div>

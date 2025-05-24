@@ -57,7 +57,7 @@ export interface CameraConsoleProps {
   onUpload: () => void
   onToggleCaption: () => void
   onSwitchCamera: () => void
-  onStartCamera: () => void
+  onToggleCamera: () => void
 }
 
 // gallery (images)

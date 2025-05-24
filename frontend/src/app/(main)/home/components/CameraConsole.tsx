@@ -2,7 +2,6 @@
 
 import { CameraConsoleProps } from "@/types/interfaces"
 import { Icon } from "@iconify/react"
-import Link from "next/link"
 
 const CameraConsole = ({
   isCaptureMode,
@@ -14,13 +13,14 @@ const CameraConsole = ({
   onUpload,
   onToggleCaption,
   onSwitchCamera,
-  onStartCamera,
+  onToggleCamera,
 }: CameraConsoleProps) => {
   return (
     <div className="flex justify-around items-center w-full glass rounded-full p-3 shadow-md transition-all duration-300 ease-in-out transform">
       {isCaptureMode ? (
         // Show post-capture controls
         <>
+          {/* Cancel taking photo button */}
           <button
             onClick={onCancle}
             disabled={isUploading}
@@ -33,6 +33,7 @@ const CameraConsole = ({
             />
           </button>
 
+          {/* upload photo button */}
           <button
             onClick={onUpload}
             disabled={isUploading}
@@ -54,6 +55,7 @@ const CameraConsole = ({
             )}
           </button>
 
+          {/* add caption button */}
           <button
             onClick={onToggleCaption}
             disabled={isUploading}
@@ -69,12 +71,19 @@ const CameraConsole = ({
       ) : (
         // Show camera controls
         <>
-          <Link href={`/gallery`}>
-            <button className="flex flex-col items-center transition-transform duration-200 hover:scale-110">
-              <Icon icon="solar:gallery-wide-bold" width="48" height="48" />
-            </button>
-          </Link>
+          {/* swap camera button */}
+          <button
+            onClick={onToggleCamera}
+            className={`flex flex-col items-center transition-transform duration-200 hover:scale-110 cursor-pointer`}>
+            <Icon
+              icon="ic:round-camera-alt"
+              width="48"
+              height="48"
+              className={isCameraOn ? "text-gray-400" : "text-green-500"}
+            />
+          </button>
 
+          {/* take photo button */}
           <button
             onClick={onTakePhoto}
             disabled={!isCameraOn}
@@ -87,6 +96,7 @@ const CameraConsole = ({
             />
           </button>
 
+          {/* switch camera button */}
           <button
             className={`flex flex-col items-center transition-transform duration-200 hover:scale-110 ${
               hasMultipleCameras

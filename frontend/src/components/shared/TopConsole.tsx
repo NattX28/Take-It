@@ -74,8 +74,12 @@ const TopConsole = () => {
   return (
     <nav className="w-full transition-all duration-100">
       <div className="flex justify-between items-center mt-4 ">
-        <div className="hover:opacity-80 transition-opacity cursor-pointer">
-          <Icon icon="cil:face" width="36" height="36" />
+        <div className="hover:opacity-80 transition-opacity">
+          <Link href={`/gallery`}>
+            <button className="flex flex-col items-center cursor-pointer">
+              <Icon icon="solar:gallery-wide-bold" width="36" height="36" />
+            </button>
+          </Link>
         </div>
         {/* Dropdown */}
 

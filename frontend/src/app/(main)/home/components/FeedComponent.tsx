@@ -141,7 +141,7 @@ const FeedComponent = () => {
                     {photo.user?.username}
                   </p>
                   <p className="text-white/70 text-xs">
-                    {formatRelativeTime(photo.createdAt)}
+                    {formatRelativeTime(new Date(photo.createdAt))}
                   </p>
                 </div>
 
