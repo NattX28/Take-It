@@ -1,6 +1,6 @@
 import { ApiResponse, Gallery } from "@/types/interfaces"
 import { api } from "./api"
-const BASE_URL_GALLERY = "/gallery"
+const BASE_URL_GALLERY: string = "/gallery"
 
 export const uploadPhoto = async (
   imageFile: File,

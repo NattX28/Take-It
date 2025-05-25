@@ -4,13 +4,13 @@ import { ApiResponse, Friendship, User } from "../libs/interfaces"
 
 export const sendFriendRequest = async (req: Request, res: Response) => {
   const requesterId = req.user?.id
-  const { recieverId } = req.body
+  const { username } = req.body
 
-  if (!recieverId) {
+  if (!username) {
     res.status(400).json({
       status: 400,
       message: "Bad request",
-      error: "Reciever ID is required",
+      error: "Username is required",
     } as ApiResponse<null>)
     return
   }
@@ -24,10 +24,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
     return
   }
 
-  const recieverIdNum =
-    typeof recieverId === "string" ? parseInt(recieverId) : recieverId
-
-  if (requesterId === recieverIdNum) {
+  if (req.user?.username === username) {
     res.status(400).json({
       status: 400,
       message: "Bad request",
@@ -37,7 +34,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
   }
 
   try {
-    const friendship = await userServices.addFriend(requesterId, recieverIdNum)
+    const friendship = await userServices.addFriend(requesterId, username)
 
     if (!friendship) {
       res.status(400).json({
@@ -107,8 +104,8 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
     res.status(200).json({
       status: 200,
       message: "Friend request accepted successfully",
-      data: [friendship],
-    } as ApiResponse<Friendship[]>)
+      data: friendship,
+    } as ApiResponse<Friendship>)
     return
   } catch (error) {
     console.log("Error accepting friend request:", error)

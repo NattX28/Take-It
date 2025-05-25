@@ -78,3 +78,25 @@ export interface ChatItemProps {
   unread: boolean
   time: string
 }
+
+// Pending request
+interface UserSide {
+  id: number
+  username: string
+  profilePicture: string | null
+}
+
+interface Incoming {
+  friendshipId: number
+  user: UserSide
+}
+
+interface Outgoing {
+  friendshipId: number
+  user: UserSide
+}
+
+export interface PendingRequest {
+  incoming: Incoming[]
+  outgoing: Outgoing[]
+}

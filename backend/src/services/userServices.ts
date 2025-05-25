@@ -3,7 +3,7 @@ import prisma from "../libs/prisma"
 
 export const addFriend = async (
   requesterId: number,
-  recieverId: number
+  username: string
 ): Promise<Friendship | null> => {
   // Check if the requester and reciever exist
   const requester = await prisma.user.findUnique({
@@ -14,7 +14,7 @@ export const addFriend = async (
 
   const reciever = await prisma.user.findUnique({
     where: {
-      id: recieverId,
+      username,
     },
   })
 
@@ -24,8 +24,8 @@ export const addFriend = async (
   const existingFriendship = await prisma.friendship.findFirst({
     where: {
       OR: [
-        { userId1: requesterId, userId2: recieverId },
-        { userId1: recieverId, userId2: requesterId },
+        { userId1: requesterId, userId2: reciever.id },
+        { userId1: reciever.id, userId2: requesterId },
       ],
     },
   })
@@ -35,7 +35,7 @@ export const addFriend = async (
   // Create new friendship with 'pending' status
   const friendship = await prisma.friendship.create({
     data: {
-      userId1: recieverId,
+      userId1: reciever.id,
       userId2: requesterId,
       status: "pending",
     },

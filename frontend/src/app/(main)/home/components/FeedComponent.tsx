@@ -121,7 +121,7 @@ const FeedComponent = () => {
             key={`${photo.id}-${index}`}
             className="h-screen snap-start snap-always flex flex-col justify-center items-center px-4 relative">
             {/* Photo container */}
-            <div className="relative aspect-square w-full max-w-sm bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-square w-full max-w-lg bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src={photo.imageUrl}
                 alt={photo.caption || `Photo by ${photo.user?.username}`}
