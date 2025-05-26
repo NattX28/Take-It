@@ -64,3 +64,56 @@ export interface PhotosInGallery {
   limit: number
   skip: number
 }
+
+// Chat related interfaces
+export interface ChatRoom {
+  id: number
+  createdAt: Date
+  participants: ChatRoomParticipant[]
+  messages?: Message[]
+  lastMessage?: Message
+}
+
+export interface ChatRoomParticipant {
+  chatRoomId: number
+  userId: number
+  joinedAt: Date
+  user: User
+  chatRoom: ChatRoom
+}
+
+export interface Message {
+  id: number
+  chatRoomId: number
+  userId: number
+  content: string
+  createdAt: Date
+  isRead: boolean
+  user: User
+}
+
+export interface ChatListItem {
+  chatRoomId: number
+  chatRoom: {
+    id: number
+    createdAt: Date
+    participants: {
+      user: {
+        id: number
+        username: string
+        profilePicture?: string
+        lastActive: Date
+      }
+    }[]
+    lastMessage?: {
+      id: number
+      content: string
+      createdAt: Date
+      userId: number
+      user: {
+        username: string
+      }
+    }
+  }
+  joinedAt: Date
+}
