@@ -2,15 +2,6 @@ import { Request, Response, NextFunction } from "express"
 import { ApiResponse } from "../libs/interfaces"
 import { verifyToken } from "../utils/jwt"
 
-declare module "express" {
-  interface Request {
-    user?: {
-      id: number
-      username: string
-    }
-  }
-}
-
 export const requiredAuthMiddleware = (
   req: Request,
   res: Response,

@@ -117,3 +117,49 @@ export interface ChatListItem {
   }
   joinedAt: Date
 }
+
+// Socket interfaces
+export interface SocketUser {
+  userId: number
+  socketId: number
+  username: string
+}
+
+export interface ChatSocketEvents {
+  // Client to Server
+  join_chat: (chatRoomId: number) => void
+  leave_chat: (chatRoomId: number) => void
+  send_message: (data: { chatRoomId: number; content: string }) => void
+  typing_start: (chatRoomId: number) => void
+  typing_stop: (chatRoomId: number) => void
+  mark_as_read: (data: { chatRoomId: number; messageIds: number[] }) => void
+
+  // Server to Client
+  message_received: (message: Message) => void
+  user_joined: (data: {
+    userId: number
+    username: string
+    chatRoomId: number
+  }) => void
+  user_left: (data: {
+    userId: number
+    username: string
+    chatRoomId: number
+  }) => void
+  user_typing: (data: {
+    userId: number
+    username: string
+    chatRoomId: number
+  }) => void
+  user_stopped_typing: (data: {
+    userId: number
+    username: string
+    chatRoomId: number
+  }) => void
+  messages_read: (data: {
+    chatRoomId: number
+    messageIds: number[]
+    readByUserId: number
+  }) => void
+  error: (error: string) => void
+}
