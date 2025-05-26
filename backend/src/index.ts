@@ -70,11 +70,6 @@ readdirSync(routesPath).forEach((file) => {
   }
 })
 
-// 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" })
-})
-
 server.listen(PORT, () => {
   console.log(`Server run at port ${PORT}`)
 })
