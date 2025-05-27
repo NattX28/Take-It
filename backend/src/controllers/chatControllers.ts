@@ -6,6 +6,7 @@ import {
   Message,
 } from "../libs/interfaces"
 import * as chatServices from "../services/chatServices"
+import { io } from "../index"
 
 export const getChatList = async (req: Request, res: Response) => {
   const userId = req.user?.id
@@ -190,6 +191,7 @@ export const sendMessage = async (req: Request, res: Response) => {
       message: "Bad request",
       error: "Message content is required",
     } as ApiResponse<null>)
+    return
   }
 
   try {
@@ -198,6 +200,9 @@ export const sendMessage = async (req: Request, res: Response) => {
       userId,
       content.trim()
     )
+
+    // Broadcast message to all connected WebSocket clients in the room
+    io.to(chatRoomIdNum.toString()).emit("message_received", message)
 
     res.status(201).json({
       status: 201,

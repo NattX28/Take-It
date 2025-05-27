@@ -163,3 +163,13 @@ export interface ChatSocketEvents {
   }) => void
   error: (error: string) => void
 }
+
+export interface ServerToClientEvents extends ChatSocketEvents {}
+export interface ClientToServerEvents extends ChatSocketEvents {}
+
+export interface InterServerEvents {}
+
+export interface SocketData {
+  userId: number
+  username: string
+}

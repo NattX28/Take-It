@@ -6,8 +6,15 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import morgan from "morgan"
 import { createServer } from "http"
-import { Server } from "socket.io"
+import { Server as SocketIOServer } from "socket.io"
 import { socketAuthMiddleware } from "./middlewares/socketAuthMiddleware"
+import {
+  ServerToClientEvents,
+  ClientToServerEvents,
+  InterServerEvents,
+  SocketData,
+} from "./libs/interfaces"
+import { handleConnection } from "./handlers/socketHandlers"
 
 dotenv.config()
 const isProd = process.env.NODE_ENV === "production"
@@ -41,10 +48,15 @@ if (isProd) {
   )
 }
 
-const io = new Server(server, {
+export const io = new SocketIOServer<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>(server, {
   cors: {
-    // origin: FRONTEND_URL, // if dev finished, use FRONTEND_URL
-    origin: isProd ? process.env.FRONTEND_URL : "http://localhost:3000",
+    origin: FRONTEND_URL,
+    methods: ["GET", "POST"],
     credentials: true,
   },
 })
@@ -52,11 +64,7 @@ const io = new Server(server, {
 io.use(socketAuthMiddleware)
 
 io.on("connection", (socket) => {
-  console.log(`Socket connected: ${socket.id}`)
-
-  socket.on("disconnect", () => {
-    console.log(`Socket disconnected: ${socket.id}`)
-  })
+  handleConnection(io, socket)
 })
 
 // Load routes dynamically
