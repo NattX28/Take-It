@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { redirect, usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
@@ -24,6 +24,8 @@ import {
   rejectFriendRequest,
   sendFriendRequest,
 } from "@/services/user"
+import { logout } from "@/services/auth"
+import { useAuthStore } from "@/stores/authStore"
 
 // mock friend requests
 
@@ -176,6 +178,12 @@ const TopConsole = () => {
     }
   }
 
+  const handleLogout = async () => {
+    await logout()
+    useAuthStore.getState().logout()
+    redirect("/")
+  }
+
   return (
     <nav className="w-full transition-all duration-300">
       <div className="flex justify-between items-center mt-4">
@@ -312,6 +320,15 @@ const TopConsole = () => {
                 />
               </Button>
             </div>
+            <hr className="my-3 border-gray-300" />
+            {/* logout button */}
+            <Button
+              size="lg"
+              className="w-full glass-campfire hover:glass-campfire cursor-pointer"
+              onClick={handleLogout}>
+              <Icon icon="mdi:logout" className="mr-2" width={20} height={20} />
+              Logout
+            </Button>
           </PopoverContent>
         </Popover>
 

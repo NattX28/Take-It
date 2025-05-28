@@ -26,9 +26,7 @@ export interface LoginCredentials {
   password: string
 }
 
-export interface AuthUser extends User {
-  token: string
-}
+export interface AuthUser extends User {}
 
 // friendship interface
 // Friendship related interfaces

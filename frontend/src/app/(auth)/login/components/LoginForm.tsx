@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { login } from "@/services/auth"
 import { useRouter } from "next/navigation"
+import { useAuthStore } from "@/stores/authStore"
 
 const LoginForm = () => {
   const router = useRouter()
+  const { login } = useAuthStore()
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -28,8 +29,7 @@ const LoginForm = () => {
 
   const onSubmit = async (values: LoginSchema) => {
     try {
-      const response = await login(values.username, values.password)
-      alert(response.message)
+      await login(values.username, values.password)
       router.push("/home")
     } catch (error) {
       console.error("Login error:", error)

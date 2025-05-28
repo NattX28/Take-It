@@ -1,12 +1,12 @@
-import { ApiResponse, AuthUser, User } from "@/types/interfaces"
+import { ApiResponse, User } from "@/types/interfaces"
 import { api } from "./api"
 
 export const login = async (
   username: string,
   password: string
-): Promise<ApiResponse<AuthUser>> => {
+): Promise<ApiResponse<User>> => {
   try {
-    const response = await api.post<ApiResponse<AuthUser>>(`/login`, {
+    const response = await api.post<ApiResponse<User>>(`/login`, {
       username,
       password,
     })
@@ -31,6 +31,15 @@ export const signup = async (
     return response.data
   } catch (error) {
     console.error("Signup error:", error)
+    throw error
+  }
+}
+
+export const logout = async () => {
+  try {
+    await api.post<ApiResponse<null>>("/logout", {})
+  } catch (error) {
+    console.error("Logout error:", error)
     throw error
   }
 }

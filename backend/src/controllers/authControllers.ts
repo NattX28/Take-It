@@ -1,6 +1,5 @@
 import {
   ApiResponse,
-  AuthUser,
   LoginCredentials,
   NewUser,
   User,
@@ -65,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
         status: 200,
         message: "Login successful",
         data: authData,
-      } as ApiResponse<AuthUser>)
+      } as ApiResponse<User>)
     return
   } catch (error) {
     console.error("Login error:", error)
@@ -73,6 +72,31 @@ export const login = async (req: Request, res: Response) => {
       status: 500,
       message: "Internal server error",
       error: "Something went wrong during login",
+    } as ApiResponse<null>)
+    return
+  }
+}
+
+export const logout = async (_: Request, res: Response) => {
+  try {
+    res
+      .clearCookie("authToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      })
+      .status(200)
+      .json({
+        status: 200,
+        message: "Logged out successfully",
+        data: null,
+      } as ApiResponse<null>)
+  } catch (error) {
+    console.error("logout error:", error)
+    res.status(500).json({
+      status: 500,
+      message: "Internal server error",
+      error: "Something went wrong during logout",
     } as ApiResponse<null>)
     return
   }
