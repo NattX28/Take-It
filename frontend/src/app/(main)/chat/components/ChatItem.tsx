@@ -2,7 +2,13 @@
 import { ChatItemProps } from "@/types/interfaces"
 import { useEffect, useState } from "react"
 
-const ChatItem = ({ name, lastMessage, unread, time }: ChatItemProps) => {
+const ChatItem = ({
+  name,
+  lastMessage,
+  unread,
+  unreadCount = 0,
+  time,
+}: ChatItemProps) => {
   const [initials, setInitials] = useState<string>("")
   useEffect(() => {
     if (name) {
@@ -33,6 +39,12 @@ const ChatItem = ({ name, lastMessage, unread, time }: ChatItemProps) => {
 
   const avatarColor: string = getRandomColor(name)
 
+  const truncateMessage = (message: string, maxLength: number = 35) => {
+    return message.length > maxLength
+      ? `${message.substring(0, maxLength)}`
+      : message
+  }
+
   return (
     <div className="glass w-full flex items-center justify-between p-3 rounded-full backdrop-blur-sm shadow-md cursor-pointer transition-transform ease-in-out duration-150 hover:scale-[1.02]">
       <div className="flex items-center gap-3">
@@ -40,20 +52,32 @@ const ChatItem = ({ name, lastMessage, unread, time }: ChatItemProps) => {
           className={`w-10 h-10 rounded-full flex items-center justify-center text-main-color font-medium ${avatarColor}`}>
           {initials}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-meduim">{name}</span>
-            {unread && <div className="w-2 h-2 rounded-full bg-blue-600"></div>}
+            <span
+              className={`font-medium truncate ${
+                unread ? "text-black" : "text-gray-900"
+              }`}>
+              {name}
+            </span>
+            {unread && (
+              <div className="w-2 h-2 rounded-full bg-blue-600 flex-shrink-0"></div>
+            )}
           </div>
-          <span className="text-sm text-gray-600">{lastMessage}</span>
+          <span
+            className={`text-sm truncate ${
+              unread ? "text-gray-700 font-meduim" : "text-gray-600"
+            }`}>
+            {truncateMessage(lastMessage)}
+          </span>
         </div>
       </div>
 
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end flex-shrink-0 ml-2">
         <div className="text-xs text-gray-500">{time}</div>
-        {unread && (
-          <div className="mt-1 w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-xs font-medium">
-            1
+        {unread && unreadCount > 0 && (
+          <div className="mt-1 min-w-[20px] h-5 rounded-full bg-blue-600 flex items-center justify-center text-xs font-medium text-white px-1.5">
+            {unreadCount > 99 ? "99+" : unreadCount}
           </div>
         )}
       </div>

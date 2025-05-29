@@ -23,7 +23,7 @@ interface ChatState {
 
   // Messages
   messages: Record<number, Message[]>
-  addMessages: (chatRoomId: number, message: Message) => void
+  addMessage: (chatRoomId: number, message: Message) => void
   setMessages: (chatRoomId: number, messages: Message[]) => void
   updateMessageReadStatus: (chatRoomId: number, messageIds: number[]) => void
 
@@ -70,7 +70,7 @@ export const useChatStore = create<ChatState>()(
 
       // Messages
       messages: {},
-      addMessages: (chatRoomId, message) =>
+      addMessage: (chatRoomId, message) =>
         set((state) => ({
           messages: {
             ...state.messages,

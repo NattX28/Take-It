@@ -7,6 +7,7 @@ interface AuthState {
   // basic payload
   user: User | null
   isAuthenticated: boolean
+  isLoading: boolean
   setUser: (user: User) => void
   clearUser: () => void
 
@@ -20,6 +21,8 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
+      isLoading: false,
+
       setUser: (user) => set({ user, isAuthenticated: true }),
       clearUser: () => set({ user: null, isAuthenticated: false }),
 
@@ -42,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         user: state.user
           ? {
-              id: state.user.id,
+              userId: state.user.id,
               username: state.user.username,
               email: state.user.email,
               profilePicture: state.user.profilePicture,

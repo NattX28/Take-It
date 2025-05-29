@@ -74,7 +74,9 @@ export interface ChatItemProps {
   name: string
   lastMessage: string
   unread: boolean
+  unreadCount?: number
   time: string
+  isOnline?: boolean
 }
 
 // Pending request

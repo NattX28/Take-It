@@ -1,9 +1,9 @@
-import ChatList from "./components/ChatList"
+import ChatPage from "./components/ChatPage"
 
 const ChatContainer = () => {
   return (
     <>
-      <ChatList />{" "}
+      <ChatPage />
     </>
   )
 }
