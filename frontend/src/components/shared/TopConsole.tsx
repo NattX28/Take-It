@@ -27,8 +27,6 @@ import {
 import { logout } from "@/services/auth"
 import { useAuthStore } from "@/stores/authStore"
 
-// mock friend requests
-
 const TopConsole = () => {
   const pathName = usePathname()
   const router = useRouter()
@@ -39,6 +37,8 @@ const TopConsole = () => {
   )
   const [friendUsername, setFriendUsername] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
+
+  const { user } = useAuthStore()
 
   const fetchFriends = async () => {
     try {
@@ -188,7 +188,7 @@ const TopConsole = () => {
     <nav className="w-full transition-all duration-300">
       <div className="flex justify-between items-center mt-4">
         <div className="hover:opacity-80 transition-opacity">
-          <Link href={`/gallery`}>
+          <Link href={`/gallery${user?.id}`}>
             <button className="flex flex-col items-center cursor-pointer">
               <Icon icon="solar:gallery-wide-bold" width="36" height="36" />
             </button>
