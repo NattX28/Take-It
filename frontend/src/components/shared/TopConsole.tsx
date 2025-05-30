@@ -188,7 +188,7 @@ const TopConsole = () => {
     <nav className="w-full transition-all duration-300">
       <div className="flex justify-between items-center mt-4">
         <div className="hover:opacity-80 transition-opacity">
-          <Link href={`/gallery${user?.id}`}>
+          <Link href={`/gallery/${user?.id}`}>
             <button className="flex flex-col items-center cursor-pointer">
               <Icon icon="solar:gallery-wide-bold" width="36" height="36" />
             </button>

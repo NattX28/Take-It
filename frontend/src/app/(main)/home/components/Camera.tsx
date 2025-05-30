@@ -108,28 +108,20 @@ const Camera = () => {
     if (video && canvas) {
       const context = canvas.getContext("2d")
 
-      // กำหนดขนาดสูงสุด
-      const maxWidth = 1080
-      const maxHeight = 1080
+      // determine the size of the canvas to match the video
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
 
-      let { videoWidth, videoHeight } = video
+      // draw the video frame to the canvas
+      context?.drawImage(video, 0, 0, canvas.width, canvas.height)
 
-      // คำนวณขนาดใหม่ให้พอดี
-      if (videoWidth > maxWidth || videoHeight > maxHeight) {
-        const ratio = Math.min(maxWidth / videoWidth, maxHeight / videoHeight)
-        videoWidth *= ratio
-        videoHeight *= ratio
-      }
+      // convert the canvas to a base64 image
+      const photoData = canvas.toDataURL("image/jpeg")
 
-      canvas.width = videoWidth
-      canvas.height = videoHeight
-
-      context?.drawImage(video, 0, 0, videoWidth, videoHeight)
-
-      // บีบอัดรูป (ลด quality)
-      const photoData = canvas.toDataURL("image/jpeg", 0.8) // quality 80%
-
+      //  save the captured photo
       setCapturedPhoto(photoData)
+
+      // stop camera after taking the photo
       stopCamera()
     }
   }

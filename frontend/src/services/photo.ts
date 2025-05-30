@@ -15,11 +15,7 @@ export const uploadPhoto = async (
     // public/private setting
     formData.append("isPublic", "true")
 
-    const response = await api.post(`${BASE_URL_GALLERY}/upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    const response = await api.post(`${BASE_URL_GALLERY}/upload`, formData)
 
     return response.data
   } catch (error) {
